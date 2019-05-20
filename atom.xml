@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http:://halin.xyz/"/>
-  <updated>2019-05-19T09:14:42.988Z</updated>
+  <updated>2019-05-20T15:15:30.472Z</updated>
   <id>http:://halin.xyz/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>显示电脑中的串口及串口详细信息</title>
+    <link href="http:://halin.xyz/%E6%98%BE%E7%A4%BA%E4%B8%B2%E5%8F%A3/"/>
+    <id>http:://halin.xyz/显示串口/</id>
+    <published>2019-05-20T14:48:22.000Z</published>
+    <updated>2019-05-20T15:15:30.472Z</updated>
+    
+    <content type="html"><![CDATA[<p>一个简单的不能再简单工具，把头文件包含进去也才14行代码，如下</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;QCoreApplication&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"QtSerialPort/QSerialPortInfo"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"QtDebug"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">auto</span> infos = QSerialPortInfo::availablePorts();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> QSerialPortInfo &amp;info : infos) &#123;</span><br><span class="line">        QString menu_temp = info.portName() + <span class="string">" : "</span> + info.description();</span><br><span class="line">        qDebug() &lt;&lt; menu_temp;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>这个程序只能在命令行中打开，是用来显示电脑中串口的详细信息，因为工作学习中经常要使用到串口，几乎每次使用要打开设备管理器查看用的是哪个串口，有时候打开会很慢，要等上几秒钟，还有使用设备管理器查看串口设备需要如下步骤：<br>1、打开计算机管理<br>2、选择设备管理器<br>3、从众多硬件中找到串口</p><p>很浪费时间，于是，我就想着写了这个软件，把该软件的目录添加到环境变量，就可以在命令行中打开，如下，win 7  cmd中：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/QT/showserial/cmd.png" alt="cmd"></p><p>还有在VScode中的执行结果如下；</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/QT/showserial/vscode.png" alt="vscode"></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;一个简单的不能再简单工具，把头文件包含进去也才14行代码，如下&lt;/p&gt;
+&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span c
+      
+    
+    </summary>
+    
+      <category term="QT" scheme="http:://halin.xyz/categories/QT/"/>
+    
+    
+      <category term="QT" scheme="http:://halin.xyz/tags/QT/"/>
+    
+  </entry>
   
   <entry>
     <title>重新开始使用hexo</title>
