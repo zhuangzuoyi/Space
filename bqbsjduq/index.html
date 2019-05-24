@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="1&amp;nbsp;&amp;nbsp;有一类表情包很流行，（这里应该有配图，不过，怕侵权，没了解过这些表情包图片能不能用在个人文章中）这类表情包都会有这么一个格式的文字：滴，XXX卡，有一天，突然想到，可以做个类似的东西玩玩。&amp;nbsp;&amp;nbsp;硬件方面，语音模块首先想到的是TTS模块，这类模块应该是很成熟，某宝上很多，使用起来也很简单，直接把想播放的语音的文字通过串口发送到这里模块就行了。&amp;nbsp;&amp;">
+<meta name="keywords" content="ESP32">
+<meta property="og:type" content="article">
+<meta property="og:title" content="表情包世界读卡器">
+<meta property="og:url" content="http:://halin.xyz/bqbsjduq/index.html">
+<meta property="og:site_name" content="哈拎">
+<meta property="og:description" content="1&amp;nbsp;&amp;nbsp;有一类表情包很流行，（这里应该有配图，不过，怕侵权，没了解过这些表情包图片能不能用在个人文章中）这类表情包都会有这么一个格式的文字：滴，XXX卡，有一天，突然想到，可以做个类似的东西玩玩。&amp;nbsp;&amp;nbsp;硬件方面，语音模块首先想到的是TTS模块，这类模块应该是很成熟，某宝上很多，使用起来也很简单，直接把想播放的语音的文字通过串口发送到这里模块就行了。&amp;nbsp;&amp;">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/PN532.jpg">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/lyrat.jpg">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/board.PNG">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/port.PNG">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/aliyun_tts.png">
+<meta property="og:updated_time" content="2019-05-24T17:46:09.846Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="表情包世界读卡器">
+<meta name="twitter:description" content="1&amp;nbsp;&amp;nbsp;有一类表情包很流行，（这里应该有配图，不过，怕侵权，没了解过这些表情包图片能不能用在个人文章中）这类表情包都会有这么一个格式的文字：滴，XXX卡，有一天，突然想到，可以做个类似的东西玩玩。&amp;nbsp;&amp;nbsp;硬件方面，语音模块首先想到的是TTS模块，这类模块应该是很成熟，某宝上很多，使用起来也很简单，直接把想播放的语音的文字通过串口发送到这里模块就行了。&amp;nbsp;&amp;">
+<meta name="twitter:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/PN532.jpg">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="哈拎" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http:://halin.xyz/bqbsjduq/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>表情包世界读卡器 | 哈拎</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">哈拎</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/bqbsjduq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哈拎">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哈拎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">表情包世界读卡器
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-24 22:59:43" itemprop="dateCreated datePublished" datetime="2019-05-24T22:59:43+08:00">2019-05-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-05-25 01:46:09" itemprop="dateModified" datetime="2019-05-25T01:46:09+08:00">2019-05-25</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ESP32-NFC/" itemprop="url" rel="index"><span itemprop="name">ESP32 NFC</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><p>&nbsp;&nbsp;有一类表情包很流行，（这里应该有配图，不过，怕侵权，没了解过这些表情包图片能不能用在个人文章中）这类表情包都会有这么一个格式的文字：滴，XXX卡，有一天，突然想到，可以做个类似的东西玩玩。<br>&nbsp;&nbsp;硬件方面，语音模块首先想到的是<a href="https://baike.baidu.com/item/TTS/3512737" target="_blank" rel="noopener">TTS</a>模块，这类模块应该是很成熟，某宝上很多，使用起来也很简单，直接把想播放的语音的文字通过串口发送到这里模块就行了。<br>&nbsp;&nbsp;后来想起来手上有一块ESP32Lyrat音频开发板，也许可以用，就不用再买TTS模块（舍不得钱），看了下乐鑫提供的<a href="https://github.com/espressif/esp-adf" target="_blank" rel="noopener">音频开发框架（adf）</a>中有播放mp3的例程，只要做出相应语言的mp3文件就行了，<br>&nbsp;&nbsp;因为我用过阿里云，知道阿里云有提供tts服务，实验了下，可以用阿里云的tts服务来生成mp3文件。<br>&nbsp;&nbsp;读卡模块，首先想到的是手上有的RC522模块，手上的RC522模块是spi接口的，不过，esp32 lytea板子可用的IO太少了，最后选用了可以用串口通讯的PN532模块，<br>总体思路是程序中先保存几个卡片的UID，然后把PN532读取卡片的UID跟已近保存到程序中的UID比较，如果读取到的卡片的UID存在程序中的UID则返回一个参数，然后根据这个参数播放不同的mp3文件。原理上很简单。</p>
+<h1 id="2，硬件"><a href="#2，硬件" class="headerlink" title="2，硬件"></a>2，硬件</h1><ul>
+<li><p>读卡模块：PN532 NFC 模块<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/PN532.jpg" alt="image"></p>
+</li>
+<li><p>ESP32开发板：ESP32-LyraT 4.2<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/lyrat.jpg" alt="image"></p>
+</li>
+</ul>
+<h1 id="3、开发环境-windown7"><a href="#3、开发环境-windown7" class="headerlink" title="3、开发环境:windown7"></a>3、开发环境:windown7</h1><ol>
+<li><p>编译器<br>参考：<a href="https://docs.espressif.com/projects/esp-idf/zh_CN/stable/get-started/windows-setup.html" target="_blank" rel="noopener">https://docs.espressif.com/projects/esp-idf/zh_CN/stable/get-started/windows-setup.html</a></p>
+<p> 下载esp32_win32_msys2_environment_and_toolchain，解压即可，</p>
+</li>
+<li>SDK<br>下载音频开发框架（adf）:参考：<a href="https://github.com/espressif/esp-adf" target="_blank" rel="noopener">https://github.com/espressif/esp-adf</a><blockquote>
+<p>git clone –recursive <a href="https://github.com/espressif/esp-adf.git" target="_blank" rel="noopener">https://github.com/espressif/esp-adf.git</a></p>
+</blockquote>
+</li>
+</ol>
+<h1 id="4、使用adf中的工程"><a href="#4、使用adf中的工程" class="headerlink" title="4、使用adf中的工程"></a>4、使用adf中的工程</h1><p>这里使用esp-adf/examples/player/pipeline_sdcard_mp3工程,打开编译工具，进入到该目录，输入命令<strong>make menuconfig</strong>进行配置，这里主要配置如下几项：</p>
+<p>1、选择相应的板子的型号，我这里是ESP32-LyraT 4.2，配置入下：<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/board.PNG" alt></p>
+<p>2、然后设置串口、Flash参数，如下图：<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/port.PNG" alt></p>
+<p>配置完之后，使用命令<strong>make flash</strong>进行烧录，默认的工程是播放SD卡中的<strong>test.mp3</strong>文件，把有<strong>test.mp3</strong>文件的SD卡插入板子上的SD卡卡座，重新开机，就可以播放音乐了</p>
+<h1 id="5、使用阿里云TTS服务生成MP3文件"><a href="#5、使用阿里云TTS服务生成MP3文件" class="headerlink" title="5、使用阿里云TTS服务生成MP3文件"></a>5、使用阿里云TTS服务生成MP3文件</h1><p>1、TTS在阿里云里面，是<a href="https://ai.aliyun.com/nls" target="_blank" rel="noopener">智能语音交互</a>中的<a href="https://ai.aliyun.com/nls/tts?spm=5176.12061031.1228726.4.44883cb4tPtjyl" target="_blank" rel="noopener">语音合成</a>的功能，里面的描述是：语音合成服务，通过先进的深度学习技术，将文本转换成自然流畅的语音。文本转换成语音就是TTS。要使用该服务，首先需要个阿里云账号，然后开通该服务并创建一个项目，完成后，在控制台中可以找到<strong>AccessToken</strong>跟项目<strong>Appkey</strong>。如下图，这两个参数在生成mp3文件时需要用到。</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/bqbsjduq/aliyun_tts.png" alt></p>
+<p>2、阿里云提供的语音合成的RESTful API 有两个（详情查看<a href="https://help.aliyun.com/document_detail/94737.html?spm=a2c4g.11186623.6.593.68b25275DRasFX" target="_blank" rel="noopener">文档</a>）,我使用了其中的get方法，该方法的url格式为：</p>
+<blockquote>
+<p><a href="https://nls-gateway.cn-shanghai.aliyuncs.com/stream/v1/tts?appkey=${您的appkey}&amp;token=${您的token}&amp;text=${想要合成的文本}&amp;format=mp3&amp;sample_rate=16000" target="_blank" rel="noopener">https://nls-gateway.cn-shanghai.aliyuncs.com/stream/v1/tts?appkey=${您的appkey}&amp;token=${您的token}&amp;text=${想要合成的文本}&amp;format=mp3&amp;sample_rate=16000</a></p>
+</blockquote>
+<p>把上面的${您的appkey}、${您的token}、${想要合成的文本}替换成你的就可以了，我一开始使用用chrome一个http调试插件来生成文件的，后来发现了个更简单的方法，就是直接用浏览器打开该URL，然后可以播放该音频，如果满足效果的话，另存为即可，既可以验证也可以下载，一举两得。</p>
+<h1 id="6、PN532驱动"><a href="#6、PN532驱动" class="headerlink" title="6、PN532驱动"></a>6、PN532驱动</h1><p>由于这里只需要读取卡片的UID，所以只需用到PN532两个命令（不包括唤醒命令）：<br>1.设置卡片为读卡器模式，并且是读14443的卡（因为我手上的是M1卡）</p>
+<blockquote>
+<p>0x00,0xff,0x03,0xfd,0xd4,0x14,0x01,0x17,x00</p>
+</blockquote>
+<ol start="2">
+<li>然后是寻卡指令，可以获得卡片的UID<blockquote>
+<p>0x00,0xff,0x04,0xfc,0xd4,0x4a,0x02,0x00,0xe0,0x00</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="7、"><a href="#7、" class="headerlink" title="7、"></a>7、</h1><p>整个做下了也还是很简单的，自己写的代码主要是PN532的驱动，播放音频部分乐鑫已近做了只要拿来用就行，全部代码及音频文件都在<a href="https://github.com/zhuangzuoyi/Embedded-coding/tree/master/esp32/meme_reader" target="_blank" rel="noopener">meme_reader</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ESP32/" rel="tag"># ESP32</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/显示串口/" rel="next" title="显示电脑中的串口及串口详细信息">
+                <i class="fa fa-chevron-left"></i> 显示电脑中的串口及串口详细信息
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">哈拎</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1"><span class="nav-number">1.</span> <span class="nav-text">1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2，硬件"><span class="nav-number">2.</span> <span class="nav-text">2，硬件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3、开发环境-windown7"><span class="nav-number">3.</span> <span class="nav-text">3、开发环境:windown7</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4、使用adf中的工程"><span class="nav-number">4.</span> <span class="nav-text">4、使用adf中的工程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5、使用阿里云TTS服务生成MP3文件"><span class="nav-number">5.</span> <span class="nav-text">5、使用阿里云TTS服务生成MP3文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6、PN532驱动"><span class="nav-number">6.</span> <span class="nav-text">6、PN532驱动</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7、"><span class="nav-number">7.</span> <span class="nav-text">7、</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哈拎</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
