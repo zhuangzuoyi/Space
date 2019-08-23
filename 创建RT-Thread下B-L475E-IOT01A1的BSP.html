@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="​    最近RT-Thread重新整理了STM32系列BSP，推出了新的BSP框架，正好手上有一块 B-L475E-IOT01A，可以用来体验下新的BSP。 ​    B-L475E-IOT01A是ST基于STM32L475VG推出的一个面向IOT的DEMO板，具体介绍请查看官网。 准备环境：1、RT-Thread Env工具Env官方介绍如：RT-Thread Env工具包括配置器和包管理器，">
+<meta name="keywords" content="STM32">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建RT-Thread下B-L475E-IOT01A1的BSP">
+<meta property="og:url" content="http:://halin.xyz/创建RT-Thread下B-L475E-IOT01A1的BSP.html">
+<meta property="og:site_name" content="哈拎">
+<meta property="og:description" content="​    最近RT-Thread重新整理了STM32系列BSP，推出了新的BSP框架，正好手上有一块 B-L475E-IOT01A，可以用来体验下新的BSP。 ​    B-L475E-IOT01A是ST基于STM32L475VG推出的一个面向IOT的DEMO板，具体介绍请查看官网。 准备环境：1、RT-Thread Env工具Env官方介绍如：RT-Thread Env工具包括配置器和包管理器，">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/open_cubemx_config.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/config_1.gif">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/create.gif">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/led.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/test_bsp.gif">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/CDC.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/uart1.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:updated_time" content="2019-08-21T15:28:42.071Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="创建RT-Thread下B-L475E-IOT01A1的BSP">
+<meta name="twitter:description" content="​    最近RT-Thread重新整理了STM32系列BSP，推出了新的BSP框架，正好手上有一块 B-L475E-IOT01A，可以用来体验下新的BSP。 ​    B-L475E-IOT01A是ST基于STM32L475VG推出的一个面向IOT的DEMO板，具体介绍请查看官网。 准备环境：1、RT-Thread Env工具Env官方介绍如：RT-Thread Env工具包括配置器和包管理器，">
+<meta name="twitter:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/open_cubemx_config.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="哈拎" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="http:://halin.xyz/创建RT-Thread下B-L475E-IOT01A1的BSP">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>创建RT-Thread下B-L475E-IOT01A1的BSP | 哈拎</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">哈拎</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/创建RT-Thread下B-L475E-IOT01A1的BSP.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哈拎">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哈拎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">创建RT-Thread下B-L475E-IOT01A1的BSP
+
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-20 23:07:08" itemprop="dateCreated datePublished" datetime="2019-08-20T23:07:08+08:00">2019-08-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-21 23:28:42" itemprop="dateModified" datetime="2019-08-21T23:28:42+08:00">2019-08-21</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/STM32-RT-Thread/" itemprop="url" rel="index"><span itemprop="name">STM32 RT-Thread</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>​    最近RT-Thread重新整理了STM32系列BSP，推出了新的BSP框架，正好手上有一块 <strong><a href="https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html" target="_blank" rel="noopener">B-L475E-IOT01A</a></strong>，可以用来体验下新的BSP。</p>
+<p>​    B-L475E-IOT01A是ST基于STM32L475VG推出的一个面向IOT的DEMO板，具体介绍请查看<a href="https://www.st.com/en/evaluation-tools/b-l475e-iot01a.html" target="_blank" rel="noopener">官网</a>。</p>
+<h3 id="准备环境："><a href="#准备环境：" class="headerlink" title="准备环境："></a>准备环境：</h3><h4 id="1、RT-Thread-Env工具"><a href="#1、RT-Thread-Env工具" class="headerlink" title="1、RT-Thread Env工具"></a>1、RT-Thread Env工具</h4><p>Env官方介绍如：RT-Thread Env工具包括配置器和包管理器，用来对内核和组件的功能进行配置，对组件进行自由裁剪，对线上软件包进行管理，使得系统以搭积木的方式进行构建，简单方便。</p>
+<p>下载地址为：<a href="https://www.rt-thread.org/page/download.html" target="_blank" rel="noopener">https://www.rt-thread.org/page/download.html</a></p>
+<h4 id="2、下载RT-Thread"><a href="#2、下载RT-Thread" class="headerlink" title="2、下载RT-Thread"></a>2、下载RT-Thread</h4><p>直接从RT-Thread github clone下来：</p>
+<blockquote>
+<p>git clone <a href="https://github.com/RT-Thread/rt-thread.git" target="_blank" rel="noopener">https://github.com/RT-Thread/rt-thread.git</a></p>
+</blockquote>
+<h3 id="移植BSP到B-L475E-IOT01A"><a href="#移植BSP到B-L475E-IOT01A" class="headerlink" title="移植BSP到B-L475E-IOT01A"></a>移植BSP到B-L475E-IOT01A</h3><p>​    这里移植步骤是根据<a href="https://github.com/RT-Thread/rt-thread/blob/master/bsp/stm32/docs/STM32%E7%B3%BB%E5%88%97BSP%E5%88%B6%E4%BD%9C%E6%95%99%E7%A8%8B.md" target="_blank" rel="noopener">STM32 系列 BSP 制作教程</a>来操作的。</p>
+<h4 id="1、使用templates"><a href="#1、使用templates" class="headerlink" title="1、使用templates"></a>1、使用templates</h4><p>首先把<strong>rt-thread\bsp\stm32\libraries\templates</strong> 目录下的 <strong>stm32l4xx</strong>文件夹复制到<strong>rt-thread\bsp\stm32</strong>，并重命名为<strong>stm32l475-iot-disco</strong>。</p>
+<h4 id="2、用CubeMX重新生成项目"><a href="#2、用CubeMX重新生成项目" class="headerlink" title="2、用CubeMX重新生成项目"></a>2、用CubeMX重新生成项目</h4><p>打开<strong>stm32l475-iot-disco\board\CubeMX_Config</strong>下的<strong>CubeMX_Config.ioc</strong>，如下图：</p>
+<p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/open_cubemx_config.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt="image"></p>
+<p>​    由于默认的并不是该板子上的STM32L475VG，需要修改芯片的型号，由于CubeMX不支持重新选择芯片型号，需要新建工程，重新选择芯片型号（点击上图中STM32L475VETX（home旁边）即可重新创建工程），然后按照教程修改时钟、打开串口、设置下载方式。如下图：</p>
+<p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/config_1.gif" alt="image"></p>
+<p>然后保存并生成项目，<br><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/create.gif" alt="image"></p>
+<p>用CubeMX重新生成代码后，拷贝初始化函数，即把<strong>board/CubeMX_Config/Src/main.c</strong>里面的时钟初始化函数<strong>SystemClock_Config</strong>替换<strong>board/board.c</strong>里面的时钟初始化函数<strong>SystemClock_Config</strong>。</p>
+<p>然后按照教程修改Kconfig文件（board/Kconfig），修改脚本文件，修改工程文件。</p>
+<h4 id="3、根据板子外设修改例程，并编译测试"><a href="#3、根据板子外设修改例程，并编译测试" class="headerlink" title="3、根据板子外设修改例程，并编译测试"></a>3、根据板子外设修改例程，并编译测试</h4><p><strong>applications</strong>下面的<strong>mian.c</strong>中有个控制等闪烁的例子，该板子LED部分原理如下：</p>
+<p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/led.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt="image"></p>
+<p>这里选择使用LED2，通过查看原理图，LED2是连接到了PB14，把控制led的IO改为PB14，并加上一条语句，输出<strong>hello This is the BSP for B-L475E-IOT01A(STM32L475VG)</strong>，代码修改为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#define LED0_PIN    GET_PIN(B, 14)</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    int count = 1;</span><br><span class="line">    /* set LED0 pin mode to output */</span><br><span class="line">    rt_pin_mode(LED0_PIN, PIN_MODE_OUTPUT);</span><br><span class="line">    rt_kprintf(&quot;\r\nHello This is the BSP for B-L475E-IOT01A(STM32L475VG)\r\n&quot;);</span><br><span class="line">    while (count++)</span><br><span class="line">    &#123;</span><br><span class="line">        rt_pin_write(LED0_PIN, PIN_HIGH);</span><br><span class="line">        rt_thread_mdelay(500);</span><br><span class="line">        rt_pin_write(LED0_PIN, PIN_LOW);</span><br><span class="line">        rt_thread_mdelay(500);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return RT_EOK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后用RT-Thread Env工具编译工程，把固件下载到板子上，运行如下：</p>
+<p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/test_bsp.gif" alt="image"></p>
+<h3 id="填的坑"><a href="#填的坑" class="headerlink" title="填的坑"></a>填的坑</h3><ol>
+<li>该板子有带USB CDC（usb转串口）设备的ST-LINK，并接到了STM32L475VG的Uart1,如下图，因此，可以不用其他的串口设备，可以直接使用这个ST-LINK上的CDC设备实现STM32L475通过串口跟PC连接，来查看调试信息，</li>
+</ol>
+<p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/CDC.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt="image"></p>
+<p>一开始不管我怎么调，都没有调试信息出来，确认了原理图是UART1，又确认了代码是UART1，最后仔细查看了原理图，发现MCU部分UART1是使用了PB6跟PB7，如下图：</p>
+<p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/uart1.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt="image"></p>
+<p>所以，CubeMX中配置UART1的时候需要把UART的RX、TX重映射到PB6、PB7。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/weichat.jpg" alt="哈拎 wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/STM32/" rel="tag"># STM32</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/bqbsjduq.html" rel="next" title="表情包世界读卡器">
+                <i class="fa fa-chevron-left"></i> 表情包世界读卡器
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/RT-Thread下使用SPI驱动0-96寸OLED.html" rel="prev" title="RT-Thread下使用SPI驱动0.96寸OLED">
+                RT-Thread下使用SPI驱动0.96寸OLED <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">哈拎</p>
+              <div class="site-description motion-element" itemprop="description"></div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">标签</span>
+                  
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#准备环境："><span class="nav-number">1.</span> <span class="nav-text">准备环境：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、RT-Thread-Env工具"><span class="nav-number">1.1.</span> <span class="nav-text">1、RT-Thread Env工具</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、下载RT-Thread"><span class="nav-number">1.2.</span> <span class="nav-text">2、下载RT-Thread</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#移植BSP到B-L475E-IOT01A"><span class="nav-number">2.</span> <span class="nav-text">移植BSP到B-L475E-IOT01A</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、使用templates"><span class="nav-number">2.1.</span> <span class="nav-text">1、使用templates</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、用CubeMX重新生成项目"><span class="nav-number">2.2.</span> <span class="nav-text">2、用CubeMX重新生成项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、根据板子外设修改例程，并编译测试"><span class="nav-number">2.3.</span> <span class="nav-text">3、根据板子外设修改例程，并编译测试</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#填的坑"><span class="nav-number">3.</span> <span class="nav-text">填的坑</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">哈拎</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> v7.1.1</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/affix.js?v=7.1.1"></script>
+
+  <script src="/js/schemes/pisces.js?v=7.1.1"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

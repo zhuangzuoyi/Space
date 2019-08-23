@@ -322,7 +322,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/bqbsjduq/">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/RT-Thread下使用SPI驱动SD卡.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="哈拎">
@@ -342,7 +342,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/bqbsjduq/" class="post-title-link" itemprop="url">表情包世界读卡器</a>
+                <a href="/RT-Thread下使用SPI驱动SD卡.html" class="post-title-link" itemprop="url">RT-Thread下使用SPI驱动SD卡</a>
               
             
           </h2>
@@ -367,7 +367,7 @@
                 
               
 
-              <time title="创建时间：2019-05-24 22:59:43" itemprop="dateCreated datePublished" datetime="2019-05-24T22:59:43+08:00">2019-05-24</time>
+              <time title="创建时间：2019-08-21 23:38:10" itemprop="dateCreated datePublished" datetime="2019-08-21T23:38:10+08:00">2019-08-21</time>
             
 
             
@@ -384,29 +384,11 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-06-05 23:42:44" itemprop="dateModified" datetime="2019-06-05T23:42:44+08:00">2019-06-05</time>
+                <time title="修改时间：2019-08-23 23:36:56" itemprop="dateModified" datetime="2019-08-23T23:36:56+08:00">2019-08-23</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ESP32-NFC/" itemprop="url" rel="index"><span itemprop="name">ESP32 NFC</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -439,13 +421,14 @@
         
           
             <p>
-              1.概述&nbsp;&nbsp;有一类表情包很流行，（这里应该有配图，不过，怕侵权，没了解过这些表情包图片能不能用在个人文章中）这类表情包都会有这么一个格式的文字：滴，XXX卡，有一天，突然想到，可以做个类似的东西玩玩。&nbsp;&nbsp;硬件方面，语音模块首先想到的是TTS模块，这类模块应该是
+              突然想起自己有个SD卡模块，可以尝试下在RT-Thread下使用SD卡，模块如下图:这个模块是SPI接口，只需MOSI、MISO、SCK、CS，再加上电源就可以使用，跟B-L475E-IOT01A1板子的接法如下：
+                |   PB8       CS      |   
               ...
             </p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/bqbsjduq/#more" rel="contents">
+              <a class="btn" href="/RT-Thread下使用SPI驱动SD卡.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -505,7 +488,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/显示串口/">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/RT-Thread下使用SPI驱动0-96寸OLED.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="哈拎">
@@ -525,7 +508,542 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/显示串口/" class="post-title-link" itemprop="url">显示电脑中的串口及串口详细信息</a>
+                <a href="/RT-Thread下使用SPI驱动0-96寸OLED.html" class="post-title-link" itemprop="url">RT-Thread下使用SPI驱动0.96寸OLED</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-21 23:36:33" itemprop="dateCreated datePublished" datetime="2019-08-21T23:36:33+08:00">2019-08-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-23 23:56:29" itemprop="dateModified" datetime="2019-08-23T23:56:29+08:00">2019-08-23</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              尝试下在RT-Thread驱动0.96 寸OLED，驱动器是SSD1306，我手上的模块是SPI接口，如下图：需要的接口有：VCC GND D0 D1 RST DC CS。其中D0 D1 CS分别是SPI接口的SCK、MOSI、CS，RST是SSD1306复位脚，DC是命令数据选择脚。
+配置SPI总
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/RT-Thread下使用SPI驱动0-96寸OLED.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/创建RT-Thread下B-L475E-IOT01A1的BSP.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哈拎">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哈拎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/创建RT-Thread下B-L475E-IOT01A1的BSP.html" class="post-title-link" itemprop="url">创建RT-Thread下B-L475E-IOT01A1的BSP</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-20 23:07:08" itemprop="dateCreated datePublished" datetime="2019-08-20T23:07:08+08:00">2019-08-20</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-21 23:28:42" itemprop="dateModified" datetime="2019-08-21T23:28:42+08:00">2019-08-21</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/STM32-RT-Thread/" itemprop="url" rel="index"><span itemprop="name">STM32 RT-Thread</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              ​    最近RT-Thread重新整理了STM32系列BSP，推出了新的BSP框架，正好手上有一块 B-L475E-IOT01A，可以用来体验下新的BSP。
+​    B-L475E-IOT01A是ST基于STM32L475VG推出的一个面向IOT的DEMO板，具体介绍请查看官网。
+准备环境：1、
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/创建RT-Thread下B-L475E-IOT01A1的BSP.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/bqbsjduq.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哈拎">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哈拎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/bqbsjduq.html" class="post-title-link" itemprop="url">表情包世界读卡器</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-05-24 22:59:43" itemprop="dateCreated datePublished" datetime="2019-05-24T22:59:43+08:00">2019-05-24</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-08 23:25:58" itemprop="dateModified" datetime="2019-08-08T23:25:58+08:00">2019-08-08</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/ESP32-NFC/" itemprop="url" rel="index"><span itemprop="name">ESP32 NFC</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              1.概述有一类表情包很流行，(这里应该有配图，不过，怕侵权，没了解过这些表情包图片能不能用在个人文章中)这类表情包都会有这么一个格式的文字：滴，XXX卡，有一天，突然想到，可以做个类似的东西玩玩。  
+硬件方面，语音模块首先想到的是TTS模块，这类模块应该是很成熟，某宝上很多，使用起来也很简单，直接
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/bqbsjduq.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/显示串口.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哈拎">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哈拎">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/显示串口.html" class="post-title-link" itemprop="url">显示电脑中的串口及串口详细信息</a>
               
             
           </h2>
@@ -617,7 +1135,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/显示串口/#more" rel="contents">
+              <a class="btn" href="/显示串口.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -677,7 +1195,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/hello-world.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="哈拎">
@@ -697,7 +1215,7 @@
           <h2 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/hello-world/" class="post-title-link" itemprop="url">重新开始使用hexo</a>
+                <a href="/hello-world.html" class="post-title-link" itemprop="url">重新开始使用hexo</a>
               
             
           </h2>
@@ -800,7 +1318,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/hello-world/#more" rel="contents">
+              <a class="btn" href="/hello-world.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -887,7 +1405,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -906,7 +1424,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   
                 </div>
@@ -925,7 +1445,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
