@@ -96,22 +96,27 @@
 
 
 
-  <meta name="description" content="感兴趣的话可以关注我的公众号查看动态：">
-<meta property="og:type" content="website">
-<meta property="og:title" content="哈拎">
-<meta property="og:url" content="http:://halin.xyz/about/index.html">
+  <meta name="description" content="时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（GD32V——首颗RISC-V内核32位通用MCU）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发扳还没上架只是能看到相关海报。还是挺有速度的。">
+<meta name="keywords" content="GD32V RISC-V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="玩转GD32V（一）">
+<meta property="og:url" content="http:://halin.xyz/玩转GD32V（一）.html">
 <meta property="og:site_name" content="哈拎">
-<meta property="og:description" content="感兴趣的话可以关注我的公众号查看动态：">
+<meta property="og:description" content="时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（GD32V——首颗RISC-V内核32位通用MCU）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发扳还没上架只是能看到相关海报。还是挺有速度的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http:://halin.xyz/img/weichat.jpg">
-<meta property="og:updated_time" content="2019-08-20T15:01:18.739Z">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/resource.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/190826.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/RT-Thread_GD32V.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/first.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/ide.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/EmbeddedStudio.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/em_gd.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:updated_time" content="2019-08-31T16:34:15.263Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="哈拎">
-<meta name="twitter:description" content="感兴趣的话可以关注我的公众号查看动态：">
-<meta name="twitter:image" content="http:://halin.xyz/img/weichat.jpg">
+<meta name="twitter:title" content="玩转GD32V（一）">
+<meta name="twitter:description" content="时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（GD32V——首颗RISC-V内核32位通用MCU）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发扳还没上架只是能看到相关海报。还是挺有速度的。">
+<meta name="twitter:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/resource.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
 
-
-  
 
 
   <link rel="alternate" href="/atom.xml" title="哈拎" type="application/atom+xml">
@@ -120,7 +125,7 @@
 
   
   
-  <link rel="canonical" href="http:://halin.xyz/about/">
+  <link rel="canonical" href="http:://halin.xyz/玩转GD32V（一）">
 
 
 
@@ -130,7 +135,7 @@
   };
 </script>
 
-  <title> | 哈拎</title>
+  <title>玩转GD32V（一） | 哈拎</title>
   
 
 
@@ -233,7 +238,7 @@
         
         
           
-          <li class="menu-item menu-item-about menu-item-active">
+          <li class="menu-item menu-item-about">
 
     
     
@@ -309,72 +314,194 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/玩转GD32V（一）.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="哈拎">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="哈拎">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h2 class="post-title" itemprop="name headline">
-
-</h2>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <p>感兴趣的话可以关注我的公众号查看动态：</p>
-<p><img src="../img/weichat.jpg" alt></p>
+          <h2 class="post-title" itemprop="name headline">玩转GD32V（一）
 
+              
+            
+          </h2>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-01 00:09:50 / 修改时间：00:34:15" itemprop="dateCreated datePublished" datetime="2019-09-01T00:09:50+08:00">2019-09-01</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（<a href="https://mp.weixin.qq.com/s/QgenqNZlTb1T4HTS9brYiQ]" target="_blank" rel="noopener">GD32V——首颗RISC-V内核32位通用MCU</a>）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发扳还没上架只是能看到相关海报。还是挺有速度的。</p>
+<p>​    第二天看的时候，发现GD32V开发板已经上架了，可以购买，马上下单买了块GD32VF103C-START（8月23）。可是并没有当天发货，一直等到4天后（8月27）才发货。</p>
+<p>​    还是挺佩服兆易创新，GD32V发布当天就可以下单买芯片，第二天就可以下单买开发板，不过软件跟文档方面就让我心凉了一下，就在发布当天我到官网看了，没找到任何关于GD32V的文档，只在<a href="http://gd32mcu.21ic.com/" target="_blank" rel="noopener">http://gd32mcu.21ic.com/</a>上到到了这个：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/resource.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>下载下来解压发现里面是编译器跟调试期，并不是文档。</p>
+<p>不过距离发布会第四天，已经可以找到些资料了：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/190826.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>可以找到GD32V103的数据手册，用户数手册跟标准固件库了。从网上了解到RT-Thread已经有对GD32V进行支持，到RT-Thread github上看了下，确实可以看到GD32V的BSP。</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/RT-Thread_GD32V.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>查了下，差不多是发布会一个月前创建的BSP：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/first.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>从网上还了解到有好几个IDE支持该芯片：：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/ide.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>可惜的是还没有IAR的,IAR可能会支持RISC-V,也就可能支持GD32V了,keil(MDK)的话,我猜不会支持GD32V,因为keil是属于ARM的,ARM不可能支持自己的对手把。</p>
+<p>下载了Nuclei Studio看了下，是一个基于Eplices的IDE。</p>
+<p>还有Embedded Stduio，下载的是这个版本的：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/EmbeddedStudio.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>试着创建了下工程，确实是可以创建GD32V相关芯片的工程：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/em_gd.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>现在就等板子到手,试下怎么跑起来。</p>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+      <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center;">
+  <img id="wechat_subscriber_qcode" src="/img/weichat.jpg" alt="哈拎 wechat" style="width: 200px; max-width: 100%;">
+  <div>欢迎您扫一扫上面的微信公众号，订阅我的博客！</div>
+</div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GD32V-RISC-V/" rel="tag"># GD32V RISC-V</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/RT-Thread下使用SPI驱动SD卡.html" rel="next" title="RT-Thread下使用SPI驱动SD卡">
+                <i class="fa fa-chevron-left"></i> RT-Thread下使用SPI驱动SD卡
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 

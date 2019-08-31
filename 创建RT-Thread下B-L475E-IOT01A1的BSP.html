@@ -111,7 +111,7 @@
 <meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/test_bsp.gif">
 <meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/CDC.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
 <meta property="og:image" content="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/uart1.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:updated_time" content="2019-08-21T15:28:42.071Z">
+<meta property="og:updated_time" content="2019-08-25T13:49:44.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="创建RT-Thread下B-L475E-IOT01A1的BSP">
 <meta name="twitter:description" content="​    最近RT-Thread重新整理了STM32系列BSP，推出了新的BSP框架，正好手上有一块 B-L475E-IOT01A，可以用来体验下新的BSP。 ​    B-L475E-IOT01A是ST基于STM32L475VG推出的一个面向IOT的DEMO板，具体介绍请查看官网。 准备环境：1、RT-Thread Env工具Env官方介绍如：RT-Thread Env工具包括配置器和包管理器，">
@@ -394,7 +394,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-08-21 23:28:42" itemprop="dateModified" datetime="2019-08-21T23:28:42+08:00">2019-08-21</time>
+                <time title="修改时间：2019-08-25 21:49:44" itemprop="dateModified" datetime="2019-08-25T21:49:44+08:00">2019-08-25</time>
               
             
           </span>
@@ -458,11 +458,11 @@
 <h4 id="1、使用templates"><a href="#1、使用templates" class="headerlink" title="1、使用templates"></a>1、使用templates</h4><p>首先把<strong>rt-thread\bsp\stm32\libraries\templates</strong> 目录下的 <strong>stm32l4xx</strong>文件夹复制到<strong>rt-thread\bsp\stm32</strong>，并重命名为<strong>stm32l475-iot-disco</strong>。</p>
 <h4 id="2、用CubeMX重新生成项目"><a href="#2、用CubeMX重新生成项目" class="headerlink" title="2、用CubeMX重新生成项目"></a>2、用CubeMX重新生成项目</h4><p>打开<strong>stm32l475-iot-disco\board\CubeMX_Config</strong>下的<strong>CubeMX_Config.ioc</strong>，如下图：</p>
 <p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/open_cubemx_config.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt="image"></p>
-<p>​    由于默认的并不是该板子上的STM32L475VG，需要修改芯片的型号，由于CubeMX不支持重新选择芯片型号，需要新建工程，重新选择芯片型号（点击上图中STM32L475VETX（home旁边）即可重新创建工程），然后按照教程修改时钟、打开串口、设置下载方式。如下图：</p>
+<p>​    由于默认的并不是该板子上的STM32L475VG，需要修改芯片的型号，由于CubeMX不支持重新选择芯片型号，需要新建工程，重新选择芯片型号(点击上图中STM32L475VETX（home旁边）即可重新创建工程)，然后按照教程修改时钟、打开串口、设置下载方式。如下图：</p>
 <p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/config_1.gif" alt="image"></p>
 <p>然后保存并生成项目，<br><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/create.gif" alt="image"></p>
 <p>用CubeMX重新生成代码后，拷贝初始化函数，即把<strong>board/CubeMX_Config/Src/main.c</strong>里面的时钟初始化函数<strong>SystemClock_Config</strong>替换<strong>board/board.c</strong>里面的时钟初始化函数<strong>SystemClock_Config</strong>。</p>
-<p>然后按照教程修改Kconfig文件（board/Kconfig），修改脚本文件，修改工程文件。</p>
+<p>然后按照教程修改Kconfig文件(board/Kconfig)，修改脚本文件，修改工程文件。</p>
 <h4 id="3、根据板子外设修改例程，并编译测试"><a href="#3、根据板子外设修改例程，并编译测试" class="headerlink" title="3、根据板子外设修改例程，并编译测试"></a>3、根据板子外设修改例程，并编译测试</h4><p><strong>applications</strong>下面的<strong>mian.c</strong>中有个控制等闪烁的例子，该板子LED部分原理如下：</p>
 <p><img src="https://halin.oss-cn-shanghai.aliyuncs.com/B-L475E-IOT01A/led.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt="image"></p>
 <p>这里选择使用LED2，通过查看原理图，LED2是连接到了PB14，把控制led的IO改为PB14，并加上一条语句，输出<strong>hello This is the BSP for B-L475E-IOT01A(STM32L475VG)</strong>，代码修改为：</p>
@@ -599,7 +599,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -641,7 +641,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>

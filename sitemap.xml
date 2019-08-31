@@ -2,23 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http:://halin.xyz/RT-Thread%E4%B8%8B%E4%BD%BF%E7%94%A8SPI%E9%A9%B1%E5%8A%A80-96%E5%AF%B8OLED.html</loc>
+    <loc>http:://halin.xyz/%E7%8E%A9%E8%BD%ACGD32V%EF%BC%88%E4%B8%80%EF%BC%89.html</loc>
     
-    <lastmod>2019-08-23T15:56:29.416Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http:://halin.xyz/RT-Thread%E4%B8%8B%E4%BD%BF%E7%94%A8SPI%E9%A9%B1%E5%8A%A8SD%E5%8D%A1.html</loc>
-    
-    <lastmod>2019-08-23T15:36:56.499Z</lastmod>
+    <lastmod>2019-08-31T16:34:15.263Z</lastmod>
     
   </url>
   
   <url>
     <loc>http:://halin.xyz/%E5%88%9B%E5%BB%BART-Thread%E4%B8%8BB-L475E-IOT01A1%E7%9A%84BSP.html</loc>
     
-    <lastmod>2019-08-21T15:28:42.071Z</lastmod>
+    <lastmod>2019-08-25T13:49:44.636Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http:://halin.xyz/RT-Thread%E4%B8%8B%E4%BD%BF%E7%94%A8SPI%E9%A9%B1%E5%8A%A80-96%E5%AF%B8OLED.html</loc>
+    
+    <lastmod>2019-08-24T15:46:07.416Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http:://halin.xyz/RT-Thread%E4%B8%8B%E4%BD%BF%E7%94%A8SPI%E9%A9%B1%E5%8A%A8SD%E5%8D%A1.html</loc>
+    
+    <lastmod>2019-08-24T15:46:06.065Z</lastmod>
     
   </url>
   
