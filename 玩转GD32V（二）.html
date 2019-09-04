@@ -96,26 +96,27 @@
 
 
 
-  <meta name="description" content="时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（GD32V——首颗RISC-V内核32位通用MCU）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发板还没上架只是能看到相关海报。还是挺有速度的。">
+  <meta name="description" content="等了几天终于拿到板子了，拆开来，有一块板子、3条mini USB 数据线，如下：  板子大概分2部分，上面部分是GD-Link，下面是GD32V103，GD32V103引出了USB，板子上还有个USB转TTL连接到GD32V103的uart。可以看到板子上有3个USB mini接口，分别对应GD-Link，USB转TTL，GD32V103的USB。GD32V103引出的IO部分跟Arduino U">
 <meta name="keywords" content="GD32V RISC-V">
 <meta property="og:type" content="article">
-<meta property="og:title" content="玩转GD32V（一）">
-<meta property="og:url" content="http:://halin.xyz/玩转GD32V（一）.html">
+<meta property="og:title" content="玩转GD32V（二）">
+<meta property="og:url" content="http:://halin.xyz/玩转GD32V（二）.html">
 <meta property="og:site_name" content="哈拎">
-<meta property="og:description" content="时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（GD32V——首颗RISC-V内核32位通用MCU）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发板还没上架只是能看到相关海报。还是挺有速度的。">
+<meta property="og:description" content="等了几天终于拿到板子了，拆开来，有一块板子、3条mini USB 数据线，如下：  板子大概分2部分，上面部分是GD-Link，下面是GD32V103，GD32V103引出了USB，板子上还有个USB转TTL连接到GD32V103的uart。可以看到板子上有3个USB mini接口，分别对应GD-Link，USB转TTL，GD32V103的USB。GD32V103引出的IO部分跟Arduino U">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/resource.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/190826.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/RT-Thread_GD32V.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/first.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/ide.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/EmbeddedStudio.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/em_gd.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
-<meta property="og:updated_time" content="2019-09-04T15:18:29.509Z">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/01.jpg?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/doc.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/doc_folder.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/c_start_doc.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/dap.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/gd_link.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/boot_mode.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/PA9.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta property="og:updated_time" content="2019-09-04T15:22:07.297Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="玩转GD32V（一）">
-<meta name="twitter:description" content="时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（GD32V——首颗RISC-V内核32位通用MCU）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发板还没上架只是能看到相关海报。还是挺有速度的。">
-<meta name="twitter:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/resource.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
+<meta name="twitter:title" content="玩转GD32V（二）">
+<meta name="twitter:description" content="等了几天终于拿到板子了，拆开来，有一块板子、3条mini USB 数据线，如下：  板子大概分2部分，上面部分是GD-Link，下面是GD32V103，GD32V103引出了USB，板子上还有个USB转TTL连接到GD32V103的uart。可以看到板子上有3个USB mini接口，分别对应GD-Link，USB转TTL，GD32V103的USB。GD32V103引出的IO部分跟Arduino U">
+<meta name="twitter:image" content="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/01.jpg?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10">
 
 
 
@@ -125,7 +126,7 @@
 
   
   
-  <link rel="canonical" href="http:://halin.xyz/玩转GD32V（一）">
+  <link rel="canonical" href="http:://halin.xyz/玩转GD32V（二）">
 
 
 
@@ -135,7 +136,7 @@
   };
 </script>
 
-  <title>玩转GD32V（一） | 哈拎</title>
+  <title>玩转GD32V（二） | 哈拎</title>
   
 
 
@@ -334,7 +335,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/玩转GD32V（一）.html">
+    <link itemprop="mainEntityOfPage" href="http:://halin.xyz/玩转GD32V（二）.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="哈拎">
@@ -351,7 +352,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">玩转GD32V（一）
+          <h2 class="post-title" itemprop="name headline">玩转GD32V（二）
 
               
             
@@ -377,24 +378,12 @@
                 
               
 
-              <time title="创建时间：2019-09-01 00:09:50" itemprop="dateCreated datePublished" datetime="2019-09-01T00:09:50+08:00">2019-09-01</time>
+              <time title="创建时间：2019-09-04 23:05:20 / 修改时间：23:22:07" itemprop="dateCreated datePublished" datetime="2019-09-04T23:05:20+08:00">2019-09-04</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-09-04 23:18:29" itemprop="dateModified" datetime="2019-09-04T23:18:29+08:00">2019-09-04</time>
               
             
           </span>
@@ -446,26 +435,22 @@
       
 
       
-        <p>时不时的有看到关于RISC-V的新闻、文章，很多都把RISC-V说的很好，导致我一直想试用下RISC-V内核的芯片，虽然某宝上还是可以找到RISC-V内核的芯片的扳子，不过由于太贵下不了手。在看到GD32V发布的新闻（<a href="https://mp.weixin.qq.com/s/QgenqNZlTb1T4HTS9brYiQ" target="_blank" rel="noopener">GD32V——首颗RISC-V内核32位通用MCU</a>）后（8月22），立马上某宝上搜，发现GD32天猫上已经上架了GD32V的IC，开发板还没上架只是能看到相关海报。还是挺有速度的。</p>
-<p>​    第二天看的时候，发现GD32V开发板已经上架了，可以购买，马上下单买了块GD32VF103C-START（8月23）。可是并没有当天发货，一直等到4天后（8月27）才发货。</p>
-<p>​    还是挺佩服兆易创新，GD32V发布当天就可以下单买芯片，第二天就可以下单买开发板，不过软件跟文档方面就让我心凉了一下，就在发布当天我到官网看了，没找到任何关于GD32V的文档，只在<a href="http://gd32mcu.21ic.com/" target="_blank" rel="noopener">http://gd32mcu.21ic.com/</a>上到到了这个：</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/resource.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>下载下来解压发现里面是编译器跟调试器，并不是文档。</p>
-<p>不过距离发布会第四天，已经可以找到些资料了：</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/190826.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>可以找到GD32V103的数据手册，用户数手册跟标准固件库了。从网上了解到RT-Thread已经有对GD32V进行支持，到RT-Thread github上看了下，确实可以看到GD32V的BSP。</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/RT-Thread_GD32V.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>查了下，差不多是发布会一个月前创建的BSP：</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/first.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>从网上还了解到有好几个IDE支持该芯片：：</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/ide.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>可惜的是还没有IAR的,IAR可能会支持RISC-V,也就可能支持GD32V了,keil(MDK)的话,我猜不会支持GD32V,因为keil是属于ARM的,ARM不可能支持自己的对手把。</p>
-<p>下载了Nuclei Studio看了下，是一个基于Eplices的IDE。</p>
-<p>还有Embedded Stduio，下载的是这个版本的：</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/EmbeddedStudio.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>试着创建了下工程，确实是可以创建GD32V相关芯片的工程：</p>
-<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/em_gd.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
-<p>现在就等板子到手,试下怎么跑起来。</p>
+        <p>等了几天终于拿到板子了，拆开来，有一块板子、3条mini USB 数据线，如下：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/01.jpg?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>板子大概分2部分，上面部分是GD-Link，下面是GD32V103，GD32V103引出了USB，板子上还有个USB转TTL连接到GD32V103的uart。可以看到板子上有3个USB mini接口，分别对应GD-Link，USB转TTL，GD32V103的USB。GD32V103引出的IO部分跟Arduino UNO兼容。</p>
+<p><a href="http://gd32mcu.21ic.com/documents" target="_blank" rel="noopener">http://gd32mcu.21ic.com/documents</a>上可以找到该板子的一些资源:</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/doc.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
+<p>下载解压后如下:</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/doc_folder.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt><br>其中有标准库,还分别有GD32V官方DEMO板子的资料,GD32VF103C_START_DEMO_Suites如下:</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/c_start_doc.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt><br><strong>Docs</strong>下有原理图跟GD32VF103C-START评估板用户指南_V1.0(中文版跟英文版)，Projects下是一些例程。</p>
+<p>把板子上的GD-Link通过USB连接到电脑，在Win10上看到是COMSIS-DAP设备：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/dap.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt><br>CMSIS-DAP设备是基于HID协议,一般电脑有自带有驱动,不用另外安装.插入电脑前跟插入电脑后,在设备管理器中的人体学输入设备的下的设备的区别如下:</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/gd_link.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt><br>可以看到插入GD-Link后，多了<strong>HID-compliant device</strong>和<strong>USB 输入设备</strong>。<br>通过查看GD32V的datasheet的boot部分：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/boot_mode.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt><br>跟STM32F103系列一样,GD32V也支持3种启动方式,其中<strong>Boot from system memory</strong>是从内部bootloader启动,该模式可以用通过USB、串口来下载程序,从原理图看到,USB已经通过USB接口引出来了,USART0也通过USB转TTL引出来了,也就是说通过USB连接到板子上的USB或USB转TTL口,然后设置为system memory启动,可以用来下载程序。</p>
+<p>通过查看原理图图,有两个地方需要注意：</p>
+<p>1、板子子只能通过GD-Link的USB接口供电，连接GD32V103的USB的接口和连接USB转TTL的接口没有供电的功能。</p>
+<p>2、如果要通过USB 转TTL使用USART0的发送功能，需要设置下扳子上的JP2条线，把PA9连接到usb转TTL的TX脚，JP2如下图：</p>
+<p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/02/PA9.png?x-oss-process=image/quality,q_90/watermark,text_SGFsaW4,color_e2132c,size_40,g_ne,t_69,x_10,y_10" alt></p>
 
       
     </div>
@@ -508,8 +493,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/RT-Thread下使用SPI驱动SD卡.html" rel="next" title="RT-Thread下使用SPI驱动SD卡">
-                <i class="fa fa-chevron-left"></i> RT-Thread下使用SPI驱动SD卡
+              <a href="/玩转GD32V（一）.html" rel="next" title="玩转GD32V（一）">
+                <i class="fa fa-chevron-left"></i> 玩转GD32V（一）
               </a>
             
           </div>
@@ -517,10 +502,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/玩转GD32V（二）.html" rel="prev" title="玩转GD32V（二）">
-                玩转GD32V（二） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
