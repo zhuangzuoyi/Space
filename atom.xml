@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http:://halin.xyz/"/>
-  <updated>2019-09-05T16:02:52.612Z</updated>
+  <updated>2019-09-07T16:05:36.364Z</updated>
   <id>http:://halin.xyz/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>玩转GD32V（四）：给GD32V烧录程序</title>
+    <link href="http:://halin.xyz/%E7%8E%A9%E8%BD%ACGD32V%EF%BC%88%E5%9B%9B%EF%BC%89%EF%BC%9A%E7%BB%99GD32V%E7%83%A7%E5%BD%95%E7%A8%8B%E5%BA%8F.html"/>
+    <id>http:://halin.xyz/玩转GD32V（四）：给GD32V烧录程序.html</id>
+    <published>2019-09-06T16:19:23.000Z</published>
+    <updated>2019-09-07T16:05:36.364Z</updated>
+    
+    <content type="html"><![CDATA[<p>先前已经成功使用Nuclei Studio编译出了GD32V的程序，现在尝试下怎么在不使用Nuclei Studio下载的情况下，怎么把我编译出来的固件烧进GD32V，我手上的板子是GD32VF103C-START，如下图：<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/01.jpg?x-oss-process=style/add_shuiying" alt></p><p>板子上有GD-link，有USB转TTL连接到GD32V的usart0，还引出了GD32V的USB接口。可以很方便地尝试3种方法，分别是：</p><ul><li>使用GD-Link下载</li><li>使用串口ISP下载</li><li>使用DFU下载</li></ul><h4 id="GD-Link下载"><a href="#GD-Link下载" class="headerlink" title="GD-Link下载"></a>GD-Link下载</h4><p>先看下GD32V的方框图<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/jtag.png?x-oss-process=style/add_shuiying" alt><br>从GD32V的方框图可以看到，GD32V支持JTAG接口，我的板子上有板载GD-Link，可以尝试下用板载GD-Link的JTAG功能给GD32V下载程序。</p><p>首先下载GD-Link烧录工具GigaDevice GD-Link Programmer，我是在<a href="http://gd32mcu.21ic.com/documents" target="_blank" rel="noopener">http://gd32mcu.21ic.com/documents</a>找到的，如下图：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/GD-Link%20Programer.png?x-oss-process=style/add_shuiying" alt></p><p>​ 下载下来，解压后如下：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/GD-Link%20Programer_file.png?x-oss-process=style/add_shuiying" alt></p><p>首先把板子上的GD-Link接口连接到电脑上，然后打开GD-Link Programmer.exe，首先把Device Interface设置为JTAG，然后连接板子，具体操作如下：<br><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/gd_halin.gif" alt></p><p>尝试后发现，下载选项无法使用，有可能是半载GD-Link功能受限无法使用下载功能（尝试过程中有提示），也可能是我哪里操作不对。</p><h4 id="使用ISP下载"><a href="#使用ISP下载" class="headerlink" title="使用ISP下载"></a>使用ISP下载</h4><p>下载ISP烧录工具GigaDevice MCU ISP Programmer，同样可以在<a href="http://gd32mcu.21ic.com/documents" target="_blank" rel="noopener">http://gd32mcu.21ic.com/documents</a>找到：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/isp_programer.png?x-oss-process=style/add_shuiying" alt></p><p>首先设置下板子的跳线，把BOOTO拉高，BOOT1拉低，分别设置板子的JP1、JP4，如下图。把GD32V设置为Boot from system memory模式。把USB转TTL连上电脑，然后插上GD-Link用来供电。</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/boot.png?x-oss-process=style/add_shuiying" alt></p><p>然后打开<strong>GigaDevice MCU ISP Programmer.exe</strong>，具体操作如下：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/isp_halin.gif" alt></p><p>结果显示可以成功使用ISP给GD32V下载程序。</p><h4 id="DFU下载"><a href="#DFU下载" class="headerlink" title="DFU下载"></a>DFU下载</h4><p>首先下载DFU烧录工具GD32 MCU Dfu Tool工具，同样是在<a href="http://gd32mcu.21ic.com/documents" target="_blank" rel="noopener">http://gd32mcu.21ic.com/documents</a>找到：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/dfu_download.png?x-oss-process=style/add_shuiying" alt></p><p>下载下来解压后如下：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/file_of_dfu.png?x-oss-process=style/add_shuiying" alt></p><p>里面包含了Dfu下载工具，跟GD32 Dfu 设备驱动。</p><p>跟ISP一样，首先把GD32V设置为<strong>Boot from system memory</strong>，把GD32V的USB连上电脑，然后插上GD-Link用来供电。首先需要安装GD32 Dfu的驱动，然后打开GD32 MCU Dfu Tool.exe，具体操作如下：</p><p><img src="http://halin.oss-cn-shanghai.aliyuncs.com/GD32V/dl/dfu.gif" alt></p><p>结果显示可以成功使用DFU给GD32V下载程序。</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;先前已经成功使用Nuclei Studio编译出了GD32V的程序，现在尝试下怎么在不使用Nuclei Studio下载的情况下，怎么把我编译出来的固件烧进GD32V，我手上的板子是GD32VF103C-START，如下图：&lt;br&gt;&lt;img src=&quot;http://hali
+      
+    
+    </summary>
+    
+      <category term="GD32V RISC-V" scheme="http:://halin.xyz/categories/GD32V-RISC-V/"/>
+    
+    
+      <category term="GD32V RISC-V" scheme="http:://halin.xyz/tags/GD32V-RISC-V/"/>
+    
+  </entry>
   
   <entry>
     <title>玩转GD32V（三）：尝试使用Nuclei Studio开发GD32V</title>
