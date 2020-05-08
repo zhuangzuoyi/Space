@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> -->
+    <title>电动手敲琴</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+<!-- ../../../css/style.css./../../static/css/stylel.css -->
+<!-- <link rel="stylesheet" type="text/css" media="all" href="./../../static/css/style.css">
+<link rel="stylesheet" href="./../../static/css/highlight.css"> -->
+    <link rel="stylesheet" type="text/css" media="all" href="./../../static/css/style.css">
+    <link rel="stylesheet" type="text/css" href="./../../static/css/highlight.css">
+    <link rel="stylesheet" type="text/css" href="add.css">
+    <link rel="stylesheet" type="text/css" href="./../../static/bootstrap/carousel.css" >
+
+    
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css"> -->
+    <!-- <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css"> -->
+
+    <style type="text/css">
+        p,h1 {margin-bottom: 5px;}
+
+        /* iframe{
+          width: 80%;
+          height: 500px;
+        }
+
+        @media (max-width: 960px)
+        {
+          iframe{
+          width: 100%;
+          height: 250px;
+        }
+        } */
+    </style>
+
+  </head>
+  <body class="post-template-default single single-post postid-14 single-format-standard logged-in admin-bar single-author singular two-column left-sidebar customize-support">
+    <div id="page" class="hfeed">
+        <div id="main">
+            <div id="primary">
+                <div id="content" role="main">		
+                    <article id="post-14" class="post-14 post type-post status-publish format-standard hentry category-18">
+                        <header class="entry-header">
+                            <h1 class="entry-title">电动手敲琴</h1>
+                        </header>
+                        <div class="entry-content">
+                            <!---  content start    -->
+                            <h1 class="h3">目录</h1>
+                            <ul>
+                                <li><a href="#what">这是什么</a></li>
+                                <li><a href="#servo">使用舵机方案 2018上半年</a></li>
+                                <li><a href="#radiotube">无意中发现电磁阀，柳暗花明</a></li>
+                                <li><a href="#Gclamp">G字夹 成也萧何败萧何</a></li>
+                                <li><a href="#3d_printer">用到了3D打印机</a></li>
+                                <li><a href="#software_start">开始写软件了</a></li>  
+                                <li><a href="#piano">了解了下钢琴</a></li>  
+                                <li><a href="#app">android app</a></li>
+                                <li><a href="#later">后来呢？</a></li>
+                                <li><a href="#update_log">更新日志</a></li>
+                            </ul>
+                            <br/>
+                            <h1 class="h2" id="what">这是什么</h1>
+                            <hr/>
+                            <p>家里有这么一个东西，如下图：</p>
+                            <div class="columns pic">
+                              <div class="column col-6 col-xs-12"><img class="img-responsive rounded" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/Finger_piano.jpg" alt="手指琴"></div>
+                            </div>
+                            <p>这是个玩具，名字叫手敲琴，家里的小朋友还太小，不懂音乐，玩的是的也就胡敲乱打，而且大部分时间都是闲置着。</p>
+                            <p>我就想着，用我的一丁点的电子知识做个电动的，可以自动演奏。</p>
+                            <p>要自动演奏，需要一个可以实现用电控制敲打的动作，而且速度要足够快，不然声音不够大，不够清脆，自然效果也不好。</p>
+                            <p>说到电动的，首先想到的是电机，普通的有刷直流电机、步进电机、舵机等。直流电机的话，不好控制选择的角度，步进电机可以实现控制旋转多少度，可是速度太慢了，舵机既可以控制旋转多少度，速度也不慢，这是首选方案，</p>
+                            <p>普通的电机是旋转的，也想过找个可以实现垂直（纵向）传动的方案，不过没找到，</p>
+
+                            <br/>
+                            <h1 class="h2 sc_title" id="servo">使用舵机方案</h1>
+                            <hr/>
+
+                            <!-- <div class="columns pic"> -->
+                            <p>因为琴键不是很大，间隔也小，只能用小的电机，所以选择了尺寸比较小的SG90，如下图：</p>
+
+                            <div class="columns pic">
+                              <div class="column col-6 col-xs-12"><img class="img-responsive rounded" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/sg90.png"
+                                  alt="手指琴"></div>
+                            </div>
+
+                            <!-- </div> -->
+                            <p>使用该电机,当时用单个舵机实验过，可以满足需求，速度、敲打效果也不错（无图无真相，可惜当时没有拍照片，也没拍视频）</p>
+                            <p>由于有8个琴键，所以一共需要8个舵机，单个琴键的宽度比舵机小了点，那就只能把舵机错开排列了，还有个问题，舵机配的手臂太短了，需要加长才能敲到手指琴，最后做出来的效果如下：</p>
+                            <!-- <iframe src="//player.bilibili.com/player.html?aid=12777370&cid=21005778&page=1" scrolling="no" border="0" frameborder="no"
+                              framespacing="0" allowfullscreen="true"> </iframe> -->
+                            <!-- <div class="video-responsive ">
+                              <iframe src="http://player.bilibili.com/player.html?aid=40886758&cid=71818023&page=1" width="" height="" frameborder="0" allowfullscreen></iframe>
+                            </div> -->
+
+                       
+                            
+                            <div class="columns">
+                              <div class="column   col-xs-10  col-sm-10 col-md-10 col-lg-10 col-xl-6">
+                                <div class="video-responsive video-responsive-4-3">
+                                  <iframe src="http://player.bilibili.com/player.html?aid=40886758&cid=71818023&page=1" scrolling="no" border="0"
+                                    frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                                </div>
+                              </div>
+                              <div class="column   col-xs-2  col-sm-2 col-md-2 col-lg-2 col-xl-6">
+                              </div>
+                            </div>
+
+                            <br/>
+                            <p>最后呢，放弃了该方案，原因如下：</p>
+
+                            <p>1. 因为需要加长舵机手臂，我上某宝买了塑料条，
+                            根据不同位置，裁了不同长度，然后装在舵机配的手臂上，虽然一个一个装的时候小心翼翼，但是装出来后，还是对不齐，就算不是这样装上去，而是配的手臂本来就很长的，估计也很难对的齐，虽说，这个不影响效果，可是不够美观</p>
+                            <p>2. 因为想不到好的把这些舵机组装起来的方法，</p>
+                            <br/>
+                            <h1 class="h2"  id="radiotube">无意中发现电磁阀，柳暗花明</h1>
+                            <hr/>
+                            <p>之前看到<<安富莱嵌入式周报>>中讲到了国外一篇把计算器用作乐器的文章，看这篇文章的时候离之前用舵机来做的时候有一段时间了，当时看的时候，也没有意识到可以使用这篇文章中的电磁阀，而是过了一两周后才回过神，然后再把这篇文章找出来，认真看了后，才知道有电磁阀这东西，然后就在某宝上找了并下单买回来。</p>
+                            <p>电磁阀买回来了，接下来的问题就是怎么装上去，想了很多，甚至还想到了做到每个可以调高低的，都太复杂了，也没条件，后来想到了，可以直接装到亚克力板上，</p>
+
+                            <p >量了下手指琴的尺寸</p>
+                            <div class="docs-demo columns">
+                              <div class="column col-12 col-xl-8 col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div id="measure" class="carousel slide" data-ride="carousel">
+                                  <ol class="carousel-indicators">
+                                    <li data-target="#measure" data-slide-to="0" class="active"></li>
+                                    <li data-target="#measure" data-slide-to="1"></li>
+                                  </ol>
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img class="first-slide tupian" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/mes_01.png"
+                                        alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="second-slide tupian" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/mes_02.png"
+                                        alt="Second slide">
+                                    </div>
+                                  </div>
+                                  <a class="carousel-control-prev" href="#measure" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#measure" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+
+                            <p  >准备了块亚克力板，然后根据尺寸，在亚克力板上打了孔</p>
+
+                            <div class="docs-demo columns">
+                              <div class="column col-12 col-xl-8 col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div id="pun" class="carousel slide" data-ride="carousel">
+                                  <ol class="carousel-indicators">
+                                    <li data-target="#pun" data-slide-to="0" class="active"></li>
+                                    <li data-target="#pun" data-slide-to="1"></li>
+                                    <li data-target="#pun" data-slide-to="2"></li>
+                                  </ol>
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img class="first-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/acrylic_01.png"
+                                        alt="First slide">
+                                    </div>
+                                   
+                                    <div class="carousel-item">
+                                      <img class="second-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/acrylic_02.png"
+                                        alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="third-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/acrylic_03.png"
+                                        alt="third slide">
+                                    </div>
+                                  </div>
+                                  <a class="carousel-control-prev" href="#pun" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#pun" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+
+                            <p  >把电磁阀装上去的效果</p>
+                            <div class="docs-demo columns">
+                              <div class="column col-12 col-xl-8 col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div id="install" class="carousel slide" data-ride="carousel">
+                                  <ol class="carousel-indicators">
+                                    <li data-target="#install" data-slide-to="0" class="active"></li>
+                                    <li data-target="#install" data-slide-to="1"></li>
+                                    <li data-target="#install" data-slide-to="2"></li>
+                                  </ol>
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img class="first-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/ins_01.png"
+                                        alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="second-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/ins_02.png"
+                                        alt="Second slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="third-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/ins_03.jpg" alt="Second slide">
+                                      <div class="container">        
+                                        <div class="carousel-caption text-right">
+                                          <p>直接用热熔胶，简单粗暴</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <a class="carousel-control-prev" href="#install" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#install" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+
+                            <p>来段视频看下效果：</p>
+
+                            <div class="docs-demo columns">
+                              <div class="column col-6 col-lg-8 col-md-10 col-sm-10">
+                                <div class="video-responsive video-responsive-4-3">
+                                  <iframe src="http://player.bilibili.com/player.html?aid=41258662&cid=72464879&page=1"
+                                    frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                                </div>
+                              </div>
+                              <div class="column col-6 col-lg-4 col-md-2 col-sm-2">                           
+                              </div>
+                            </div>
+
+                          <br/>
+                          <h1 class="h2" id="Gclamp">G字夹 成也萧何败萧何</h1>
+                            <hr/>
+                            <p>接下来是我最头疼的事了，怎么把装了电磁阀的亚克力板固定到手指琴呢，我的立场是在不损坏手指琴的基础上，并且是可拆卸的，只能是把亚克力板跟手指琴夹在一起，在网上找了下，最终发现G字夹，量了下把手指琴跟亚力克板放在一起的尺寸，发现合适的是3寸的，然后就下单了，</p>
+                            <p>拿到后，发现太大了，用是可以用，不过把这3寸的G字节装上去，太难看了：</p>
+
+
+                            <div class="docs-demo columns">
+                              <div class="column col-12 col-xl-8 col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div id="clamp" class="carousel slide" data-ride="carousel">
+                                  <ol class="carousel-indicators">
+                                    <li data-target="#clamp" data-slide-to="0" class="active"></li>
+                                    <li data-target="#clamp" data-slide-to="1"></li>
+                                  </ol>
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img class="first-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/3g_01.jpg" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="second-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/3g_02.png" alt="Second slide">
+                                    </div>
+                                  </div>
+                                  <a class="carousel-control-prev" href="#clamp" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#clamp" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+
+                            <br/>
+                            <p>还是不死心，又买了个2寸的试下，太小了，用不了，</p>
+
+
+                            <!-- <div class="docs-demo columns">
+                              <div class="column col-12 col-xl-8 col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div id="clamp_2" class="carousel slide" data-ride="carousel">
+                                  <ol class="carousel-indicators">
+                                    <li data-target="#clamp_2" data-slide-to="0" class="active"></li>
+                                    <li data-target="#clamp_2" data-slide-to="1"></li>
+                                  </ol>
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img class="first-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/2g_01.png"
+                                        alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="second-slide" src="https://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/2g_01.png"
+                                        alt="Second slide">
+                                    </div>
+                                  </div>
+                                  <a class="carousel-control-prev" href="#clamp_2" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#clamp_2" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div> -->
+
+
+                            <p>看来又要搁浅了，</p>
+
+
+                            <br/>
+                            <h1 class="h2" id='3d_printer'>用到了3D打印机</h1>
+                            <hr/>
+<p>有一天，突然想起来，有个同事用3D打印机打印过一个类似于G字夹的东西，然后就跟同事找来，试了下，太小了，用不了。后来问了同事能不能帮我按我的需求修改下，我同事也同意了，不仅帮我修改了，还安排帮我打印了，非常感谢这位同事，效果如下：</p>
+    <div>
+      <p class="img_container">
+        <img src="http://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/3d.jpg">
+      </p>
+    </div>
+<p>然后测了下弹奏效果，还可以接受，就把剩余的6个电磁阀给买了，还买了个新的有8路的MOS管模块，最后效果如下：</p>
+    <div>
+      <p class="img_container">
+        <img src="http://halin.oss-cn-shanghai.aliyuncs.com/Finger_piano/ok.jpg">
+      </p>
+    </div>
+
+                            <br/>
+                            <h1 class="h2" id='software_start'>开始写软件了</h1>
+                            <hr/>
+                            <p>如果只能播一首音乐的话，那就太单调了，就需要有UI，刚好最近在看ESP32，就索性用ESP32做好了（之前用舵机试验是用STM32），可以用wifi或者蓝牙来实现手机控制。</p>
+                            <p>一开始是想到直接用IO拉高拉低来控制电磁阀的，后来发现，噪音太大，有两个噪音来源，一个是电磁阀的问题，电磁阀推拉杆推出跟拉回会有金属碰撞的声音，而且电磁阀推拉速度又很快，噪音就很大，比敲打手敲琴的声音还大，体验非常不好，还有一个是琴键晃动的声音，这个就无法避免了。</p>
+                            <p>后来想到也许可以用PWM来控制，ESP32有最多有16路PWM（用LEDC），搓搓有余，控制电磁阀推拉杆推出跟拉回速度不要那么快，经过几次实验，也不行，不管怎么调占空比都不行（虽然没用示波器看，MOS模块上的LED灯可以看出PWM是有工作的）。</p>
+                            <p>既然问题是电磁阀身上，那就从电磁阀上找问题，就看下能不能把电磁阀拆了，最后发现推拉杆是可以拆的，拆开来过测试，发现只要对推来干进行处理就可以解决问题了，如下；用热缩管包裹下撞击的位置，再加上垫片</p>
+
+                            <div class="docs-demo columns">
+                              <div class="column col-12 col-xl-8 col-xs-12 col-sm-12  col-md-12 col-lg-12">
+                                <div id="improve" class="carousel slide" data-ride="carousel">
+                                  <ol class="carousel-indicators">
+                                    <li data-target="#improve" data-slide-to="0" class="active"></li>
+                                    <li data-target="#improve" data-slide-to="1"></li>
+                                  </ol>
+                                  <div class="carousel-inner">
+                                    <div class="carousel-item active">
+                                      <img class="first-slide" src="improve_01.jpg" alt="First slide">
+                                    </div>
+                                    <div class="carousel-item">
+                                      <img class="second-slide" src="improve_02.jpg" alt="Second slide">
+                                    </div>
+                                  </div>
+                                  <a class="carousel-control-prev" href="#improve" role="button" data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Previous</span>
+                                  </a>
+                                  <a class="carousel-control-next" href="#improve" role="button" data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Next</span>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+
+                            <!-- <p>
+                              <img src="http://imglf4.nosdn0.126.net/img/L0pDdGk2SmM4TVQ1dHRIL0ZiNHZqNGxReEgyN0s3TDhEOUh4VDFWNkwzeUVQWXY4WkI4SHVRPT0.jpg?imageView&thumbnail=2629y1720&type=jpg&quality=96&stripmeta=0&type=jpg">
+                            </p>
+                            <p>
+                              <img src="http://imglf3.nosdn0.126.net/img/L0pDdGk2SmM4TVQ1dHRIL0ZiNHZqMnU3T1l3NGFvRjF6eFJjSFZxRFNad2pRZDF0aFAvN0p3PT0.jpg?imageView&thumbnail=3000y1946&type=jpg&quality=96&stripmeta=0&type=jpg">
+                            </p> -->
+
+                            <p>这下效果好多了，</p>
+                            <p>经过几次调试发现，不懂音乐是硬伤，调不出满意的旋律</p>
+
+                          <div class="docs-demo columns">
+                            <div class="column col-6 col-lg-8 col-md-10 col-sm-10">
+                              <div class="video-responsive video-responsive-4-3">
+                                <iframe src="http://player.bilibili.com/player.html?aid=41117248&cid=72221503&page=1" scrolling="no" border="0"
+                                  frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                              </div>
+                            </div>
+                            <div class="column col-6 col-lg-4 col-md-2 col-sm-2">
+                            </div>
+                          </div>
+
+                          <br/>
+                          <h2 class="h2" id="piano">了解了下钢琴</h2>
+                          <hr/>
+
+                          <p> 也许是没调出像样的旋律，不甘心，上网找了钢琴的教程，看了几节钢琴的视频教程，认识了钢琴的琴键、五线谱等，想起了之前去华强北时，发现那里放有钢琴，趁着中午下班过去尝试弹了下，没有想象中的那么简单。</p>
+                          <p> 在知乎上看学钢琴相关话题时，有人提到美团上有钢琴体验课，就找了家公司附近的体验了下，解决了之前自己学习的一些疑惑。还第一次体验了坐在钢琴旁边听别人弹钢琴，太好听了，太震撼了，太美妙了。虽然老师弹的还只是钢琴课教的第一首曲子。</p>
+                          <p> 没想到，我能够通过这种方式接触了钢琴，现在这个世界，对人的限制，也许就剩下自己的想象力了。</p>
+                          <p>学了点音乐知识后，知道了音乐的节拍，有了新的思路，而不是之前的使用简单的延时来控制，</p>
+
+                          <div class="docs-demo columns">
+                            <div class="column col-6 col-lg-8 col-md-10 col-sm-10">
+                              <div class="video-responsive video-responsive-4-3">
+                                <iframe src="http://player.bilibili.com/player.html?aid=41799683&cid=73389824&page=1" scrolling="no" border="0"
+                                  frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                              </div>
+                            </div>
+                            <div class="column col-6 col-lg-4 col-md-2 col-sm-2">
+                            </div>
+                          </div>
+
+
+                          <br/>
+                          <h2 class="h2" id="app">android app</h2>
+                          <hr/>
+                               
+<p>对于Android APP,我只懂的修改别人的程序，所以上github找了个别人的<a href="https://github.com/xiaoyaoyou1212/BLE">工程</a>,按自己的需求修改了下，目前为止，可以用在手机端弹奏，</p>
+                        <div class="docs-demo columns">
+                          <div class="column col-6 col-lg-8 col-md-10 col-sm-10">
+                            <div class="video-responsive video-responsive-4-3">
+                              <iframe src="http://player.bilibili.com/player.html?aid=41744792&cid=73296463&page=1" scrolling="no" border="0"
+                                frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+                            </div>
+                          </div>
+                          <div class="column col-6 col-lg-4 col-md-2 col-sm-2">
+                          </div>
+                        </div>
+                        <br/>
+<p>除了弹奏，我还有想到其他功能，比如下一曲、上一曲、播放暂停，还有，可以在实现了手机端弹奏的功能的基础上，在手机端控制播放音乐，这样就可以不用单片机编程而是android app实现播放音乐，</p>
+                        
+
+                          <br />
+                          <h2 class="h2" id="later">后来呢？</h2>
+                          <hr />
+<p>练了几次钢琴，虽然可以弹完整首，旋律控制的还过得去，就是不好听，经过老师的指点后，发现是我的指法不对，后来意识到，弹手敲琴应该也是需要同样的指法，用单片机控制的话，用正确的指法弹奏起来，应该会更好听，也许可以解决琴键弹起来的噪音的问题。</p>
+<p>其实，这电动手敲琴控制软件部分还是挺简单的，可是从开始写到现在过了挺久的，因为我只能用下班时间写软件，测试呢，只能在周末抽出时间来，因为住的地方隔音不好，下班回来已近挺晚的，不能测试了，做起来实在是不方便，所以拖了很久。</p>
+<p>所以，后来呢？随缘吧，我已近把我做的机械部分收起来了，以后有需要，或者有机会，再把想到的功能做完。</p>
+                          <br/>
+                            <h2 class="h2" id="update_log">更新日志</h2>
+                            <hr/>
+                                <div class="timeline">
+                                    <div class="timeline-item" id="timeline-example-1">
+                                        <div class="timeline-left"><a class="timeline-icon tooltip"  data-tooltip="2018-12-27"></a></div>
+                                        <div class="timeline-content">
+                                            <div class="tile">
+                                            <div class="tile-content">
+                                                <p class="tile-subtitle">2018-12-27:</p>
+                                                <p class="tile-title"><a href="#what">这是什么</a></p>
+                                                <p class="tile-title"><a href="#servo">使用舵机方案 2018上半年</a></p>
+                                                <p class="tile-title"><a href="#radiotube">无意中发现电磁阀，柳暗花明</a></p>
+                                                <p class="tile-title"><a href="#Gclamp">G字夹 成也萧何败萧何</a></p>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="timeline-item" id="timeline-example-2">
+                                    <div class="timeline-left"><a class="timeline-icon icon-lg tooltip" href="#timeline-example-2" data-tooltip="February 2017"><i class="icon icon-check"></i></a></div>
+                                    <div class="timeline-content">
+                                        <div class="tile">
+                                        <div class="tile-content">
+                                            <p class="tile-subtitle">2019-01-05</p>
+                                            <p class="tile-title"><a href="#3d_printer">用到了3D打印</a></p>
+                                         
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+
+                                    <div class="timeline-item" id="timeline-example-3">
+                                      <div class="timeline-left"><a class="timeline-icon icon-lg tooltip" href="#timeline-example-3" data-tooltip="February 2017"><i class="icon icon-check"></i></a></div>
+                                      <div class="timeline-content">
+                                          <div class="tile">
+                                          <div class="tile-content">
+                                              <p class="tile-subtitle">2019-01-13</p>
+                                              <p class="tile-title"><a href="#software_start">开始写软件了</a></p>
+                                          </div>
+                                          </div>
+                                      </div>
+                                      </div>  
+
+                                      <div class="timeline-item" id="timeline-example-4">
+                                        <div class="timeline-left"><a class="timeline-icon icon-lg tooltip" href="#timeline-example-4" data-tooltip="February 2017"><i class="icon icon-check"></i></a></div>
+                                        <div class="timeline-content">
+                                            <div class="tile">
+                                            <div class="tile-content">
+                                                <p class="tile-subtitle">2019-01-21</p>
+                                                <p class="tile-title"><a href="#piano">了解了下钢琴</a></p>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>    
+
+                                        <div class="timeline-item" id="timeline-example-5">
+                                          <div class="timeline-left"><a class="timeline-icon icon-lg tooltip" href="#timeline-example-4" data-tooltip="February 2017"><i
+                                                class="icon icon-check"></i></a></div>
+                                          <div class="timeline-content">
+                                            <div class="tile">
+                                              <div class="tile-content">
+                                                <p class="tile-subtitle">2019-01-26</p>
+                                                <p class="tile-title"><a href="#app">Android app</a></p>
+                                                <p class="tile-title"><a href="#later">后来呢？</a></p>
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                </div>
+                            <!---  content end   -->
+                        <!-- </div> -->
+                    </article>
+                </div>
+            </div>
+        </div>
+        <footer id="colophon" role="contentinfo">
+            <div id="site-generator">By Halin</div>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"  crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <!-- <script src="../../../../assets/js/vendor/popper.min.js"></script> -->
+    <script src="./../../static/bootstrap/bootstrap.min.js"></script>
+</body>
+</html>

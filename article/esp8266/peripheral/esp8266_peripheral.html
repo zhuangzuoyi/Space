@@ -1,0 +1,103 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>ESP8266 外设</title>
+        <link rel="stylesheet" type="text/css" media="all" href="./../../static/css/style.css">
+        <link rel="stylesheet" href="./../../static/css/highlight.css">
+	</head>
+	<body class="post-template-default single single-post postid-14 single-format-standard logged-in admin-bar single-author singular two-column left-sidebar customize-support">
+		<div id="page" class="hfeed">
+			<div id="main">
+				<div id="primary">
+					<div id="content" role="main">		
+						<article id="post-14" class="post-14 post type-post status-publish format-standard hentry category-18">
+							<header class="entry-header">
+								<h1 class="entry-title">ESP8266 外设</h1>
+							</header>
+							<div class="entry-content">
+                               
+<!---  content start    -->
+    <h3>
+        1、GPIP
+    </h3>
+    <p
+        <h4>&nbsp;&nbsp;(1):概述</h4>
+    </p>
+    <p>
+        ESP8266EX 共有 17 个 IO口，大部分都是功能复用接口，比如可以用作GPIO，有些可以用作UART、I2C等接口，当IO口用作GPIO时，可以配置内部上拉、下拉、高阻态。乐鑫官网给出了这么个表格，列出了IO的功能，如下图：
+    </p>
+
+
+    <p>
+        <img src="esp8266_io.png">
+    </p>
+
+    <p>还有管脚布局图：</p>
+
+    <p>
+        <img src="pin_layout.png">
+    </p>
+
+    <p>
+        从上图可以看出ESP8266大部分IO口至少有2个功能，如15脚有三个功能，分别是GPI0、SPICS2、CLK_OUT,ESP8266 Datasheet有提到ESP8266有17个IO口，但是上面的表格只给出了16个，没给出GPIO16，是因为GPIO16比较特别，GPIO16（XPD_DCDC）不属于通用GPIO模块，属于RTC模块，可以用来在深度睡眠时唤醒整个芯片，
+        可以配置为输入输出，单无法触发IO中断。
+    </p>
+
+    <p>
+        ESP8266没有内部Flash，只能外挂Flash，这又要占用些管脚，所以能用做IO的管脚并没有17个，比如ESP官方的模块esp-wroom-s2，原理图如下：
+    </p>
+  
+    <p>
+        <img src="esp-wroom-s2.png">
+    </p>
+    <p>
+        从图中可以看出,MTDO(GPIO15)、MTCK(GPIO13)、MTDI（GPIO12)、MTMS(GPIO14)被Flash占用了，就不能用作GPIO了，
+    </p>
+
+    <p
+            <h4>&nbsp;&nbsp;(2):NO OS SDK中GPIO操作相关函数</h4>
+     </p>
+     <p
+            ①：上下拉设置：<br/>
+     </p>
+     <p>
+            管脚上拉屏蔽:PIN_PULLUP_DIS(PIN_NAME)
+     </p>
+     <p>
+            管脚上拉使能:PIN_PULLUP_EN(PIN_NAME)
+     </p>
+    <p
+        从中文说明很容易知道这两个宏分别有什么功能，但是参数是什么，文档里没讲到，代码里也没注释，通过跟踪代码发现这两个宏，最后都是使用了一个宏：<br/>
+            #define WRITE_PERI_REG(addr, val) (*((volatile uint32_t *)ETS_UNCACHED_ADDR(addr))) = (uint32_t)(val)<br/>
+        从这宏的命名很容易知道这个是写外设寄存器的宏，上面的参数“PIN_NAME”就是传给这个宏的addr，也就是一个寄存器地址，结合这个SDK给出的例子，找到了给这个宏传的参数定义的地方，就是
+        头文件“Eagle_soc.h"中的"PIN Mux reg"部分，如下图：
+    </p>
+    <p
+        <img src="pin_reg.png">
+    </p>
+    <p>
+        如果要给GPIO5加上拉，写法是：<br/>
+        PIN_PULLUP_EN(PERIPHS_IO_MUX_GPIO5_U);
+    </p>
+    <p
+            <h5>②：管脚功能选择：PIN_FUNC_SELECT(PIN_NAME,	FUNC)</h5>
+     </p>
+     <p
+           通过之前的分析我们知道了“PIN_NAME”是对应IO口的寄存器，FUNCESP8266 IO口都是功能复用的，当你要使用某种功能时，必须设置才能用，
+     </p>
+    
+    <p
+            <h4>&nbsp;&nbsp;(2):GPIO用作输出</h4>
+     </p>
+<!---  content end   -->
+</div>
+						</article>
+					</div>
+				</div>
+			</div>
+			<footer id="colophon" role="contentinfo">
+				<div id="site-generator">By Halin</div>
+			</footer>
+		</div>
+	</body>
+</html>

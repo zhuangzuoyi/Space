@@ -1,0 +1,123 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>Chrome bookmarts to web</title>
+        <link rel="stylesheet" type="text/css" media="all" href="./../../static/css/style.css">
+        <link rel="stylesheet" href="./../../static/css/highlight.css">
+	</head>
+	<body class="post-template-default single single-post postid-14 single-format-standard logged-in admin-bar single-author singular two-column left-sidebar customize-support">
+		<div id="page" class="hfeed">
+			<div id="main">
+				<div id="primary">
+					<div id="content" role="main">		
+						<article id="post-14" class="post-14 post type-post status-publish format-standard hentry category-18">
+							<header class="entry-header">
+								<h1 class="entry-title">Chrome bookmarts to web</h1>
+							</header>
+							<div class="entry-content">
+                                
+<!---  content start    -->
+    <h3>
+        1、概述
+    </h3>
+    <p >
+        这是用python写的用一个小工具，把电脑里保存的chrome浏览器的书签读取出来，放到一个html文件，然后上传到github，使用github的GitHub Pages功能，使github里的html文件可以通过网页访问，我自己的访问地址是：<a href="https://zhuangzuoyi.github.io/bookmarks">https://zhuangzuoyi.github.io/bookmarks</a>，如下图：
+    </p>
+
+    <p >
+        <img src="show.png">
+    </p>
+
+    <h3>
+        2、原理
+    </h3>
+    <p >
+        chrome的bookmarks在电脑上是以Json的格式的文本文件存储的，我电脑是win7,默认路劲是：
+    </p>
+    <pre>C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Default\bookmarks</pre>
+    <p>    如下图:</p>
+    </p>
+
+    <p >
+        <img src="bookmarts_path.png">
+    </p>
+
+    <p >
+        打开bookmarts文件后，如下图：
+    </p>
+
+    <p >
+        <img src="bookmarts_con.png">
+    </p>
+
+    <p >
+        从上图可以看出chrome的bookmarks中每条书签的存储方式，可以用python自带的json库进行解析，把bookmarks里的链接跟名字提取出来，然后存储到html文件中，
+    </p>
+    <h3>
+        3、使用
+    </h3>
+    <p >
+        从github上下载源码，可以直接下载打包文件或者git clone下来，如下图：
+    </p>
+
+    <p >
+        <img src="use_step_1.png">
+    </p>
+
+    <p >
+        下载下来后把里面的html文件删除，留下txt、python、css文件，如下图：
+    </p>
+
+    <p >
+        <img src="file.png">
+    </p>
+
+    <p>
+        然后执行python脚本文件：python make_target.py，就可以把bookmarts里面的链接转成html文件，产生出来的有两个html文件，一个是“index.html"文件，一个是用执行这脚本时的年月日命名的html文件，这个文件是最终存放链接的文件，
+        如下图：
+    </p>
+
+        <p >
+            <img src="produce.png">
+        </p>
+    <p>
+        html文件生产之后，可以在本地用浏览器打开看下有没有成功生产，没问题的话就可以上传到github了，
+    </p>
+    <h3>
+        4、设置github
+    </h3>
+    <p>
+        想要通过链接访问github中的html文件，还需要在github里进行设置，使能GitHub Pages功能，就两个步骤：<br/>
+        (1):进入github setting选项，如下图：
+    </p>
+
+    <p >
+        <img src="setting.png">
+    </p>
+
+    <p>
+        (2):在GitHub Pages中，Source选项中选择“master branch"，然后点击”Save“，保存成功后，就给出访问连接，如下图：
+    </p>
+
+    <p >
+        <img src="enable_github_page.png">
+    </p>
+
+    <p>
+        设置好后，就可以在任何连了互联网的设备通过网页浏览你保存的书签了。
+    </p>
+<!---<p><img src="3.jpg"></p>-->
+
+<!--<p>每一行数据都是一次读取，每次读取的三个整数都是ADXL345寄存器的原始值，整数中每一个1代表4mg。</p>-->
+<!---  content end   -->
+</div>
+						</article>
+					</div>
+				</div>
+			</div>
+			<footer id="colophon" role="contentinfo">
+				<div id="site-generator">By Halin</div>
+			</footer>
+		</div>
+	</body>
+</html>
